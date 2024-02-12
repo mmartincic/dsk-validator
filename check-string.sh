@@ -38,6 +38,19 @@ print_dsk() {
     echo "DSK Key: $dsk"
 }
 
+extract_and_print_info() {
+    local dsk=$1
+
+    local product_type_id="${dsk:0:4}"
+    local product_id="${dsk:4:4}"
+    local manufacturer_id="${product_type_id:2:2}"
+
+    echo "Product Type ID: $product_type_id"
+    echo "Product ID: $product_id"
+    #see zwave docs
+    #echo "Manufacturer ID: $manufacturer_id"
+}
+
 main() {
     if [[ $# -eq 1 ]]; then
         lead_in="${1:0:2}"
@@ -51,6 +64,8 @@ main() {
 
         print_requested_keys "$requested_keys"
         print_dsk "$dsk"
+
+        extract_and_print_info "$dsk"
     else
         echo "Usage: $0 <DSK>"
         exit 1
